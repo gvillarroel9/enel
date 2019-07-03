@@ -1,0 +1,12 @@
+<h1>Hablame</h1>
+<input type="file" (change)="onFileChange($event)" multiple="false" />
+<table  *ngIf="complete">
+    <tr *ngFor="let row of data">
+        <td *ngFor="let val of row">
+            {{val}}
+        </td>
+    </tr>
+</table>
+
+  <button (click)="export()">Export!</button>
+  <button (click)="consultaMasiva()">Consultar Todos!</button>
