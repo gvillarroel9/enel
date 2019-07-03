@@ -22,6 +22,7 @@ export class PlantillaComponent implements OnInit {
   complete = true;
   url = 'https://metric-marks-80160.herokuapp.com/api/factura/';
   clienteActual: Cliente = new Cliente('', '' , '' , '');
+  cantidadClientes: number = 0;
 
   constructor( private http: HttpClient) {
    }
@@ -57,13 +58,19 @@ export class PlantillaComponent implements OnInit {
   }
 
   consultaMasiva() {
+    this.complete = false;
     console.log(this.data)
     console.log(this.data[3].length);
     for( let i = 1; i <this.data.length; i++){
       if(this.data[i][3]&&!this.data[i][4]){
         this.consultar(this.data[i][3],i);
+        this.cantidadClientes++;
       }
     }
+    if(!this.cantidadClientes){
+      this.complete = true;
+    }
+
   }
 
   consultar(idClient: string, indice:number) {
@@ -81,6 +88,10 @@ export class PlantillaComponent implements OnInit {
           this.data[indice][4] = "Error en Consulta";
           console.log(res);
         }
+        if(indice==this.cantidadClientes){
+          this.complete = true;
+          this.cantidadClientes=0;
+        }      
       },
       (err) => {
         console.log(err);
