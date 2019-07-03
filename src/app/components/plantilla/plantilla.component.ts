@@ -10,6 +10,12 @@ class Cliente {
     public fechaVencimiento: String)
     {}
 }
+interface ClientResponse {
+  supplyBalance: string;
+  expiryDate: string;
+  address: string;
+  beResultCode: string;
+}
 
 @Component({
   selector: 'app-plantilla',
@@ -74,7 +80,7 @@ export class PlantillaComponent implements OnInit {
   }
 
   consultar(idClient: string, indice:number) {
-    this.http.get(this.url + idClient).subscribe(
+    this.http.get<ClientResponse>(this.url + idClient).subscribe(
       (res) => {
         console.log(idClient);
         if(res.supplyBalance == '0'){
